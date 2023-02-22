@@ -26,6 +26,13 @@ const getAllProducts = async (req,res)=>{
          }
          const regExp = /\b(<|>|<=|>=|=)\b/g
          let filters = numFilters.replace(regExp, (match)=>`-${operatorMap[match]}-`)
+         const options = ['price', 'rating']
+         filters = filters.split(',').foreach((item)=>{
+            const [field, operator, value] = item.split('-')
+            if (options.includes(fields)){
+                queryObject[fields] = {[operator]:Number(value)}
+            }
+         })
     }
 
     let result =  products.find(queryObject)
